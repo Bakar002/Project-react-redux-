@@ -4,11 +4,17 @@ import Nav from 'react-bootstrap/Nav';
 import Badge from '@mui/material/Badge';
 import Navbar from 'react-bootstrap/Navbar';
 import Menu from '@mui/material/Menu';
-
+import {useSelector} from "react-redux"
+import Table from 'react-bootstrap/esm/Table';
 import {NavLink }from 'react-router-dom';
 
 const Header = () => {
-    const [anchorEl, setAnchorEl] =useState(null);
+
+  const getData = useSelector((state)=>
+    state.reducer.carts
+  )
+  console.log (getData)
+    const [anchorEl,  setAnchorEl] =useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -17,7 +23,7 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  return (
+  return (<>
     <Navbar bg="dark" variant="dark"style={{height:55}}>
     <Container>
       <NavLink to="/cart" className="text-decoration-none text-light mx-3">Add to Cart</NavLink>
@@ -25,7 +31,7 @@ const Header = () => {
         <NavLink to="/" className="text-decoration-none text-light">Home</NavLink>
       
       </Nav>
-      <Badge badgeContent={4} color="primary"
+      <Badge badgeContent={getData.length} color="primary"
       id="basic-button"
       aria-controls={open ? 'basic-menu' : undefined}
       aria-haspopup="true"
@@ -45,16 +51,61 @@ const Header = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <div className="card_details d-flex justify-content-center allign-items-center"style={{width:"23rem",padding:10,position:"relativex"}}>
-        <i className="fas fa-close smallclose" onClick={handleClose} style={{position:"absolute",top:2,right:20,fontSize:23,cursor:"pointer"}}></i>
+        {
+          getData.length?
+          <div className="card_details" style={{width:"25rem",padding:10}}>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Resturant Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  getData.map((e)=>{
+return(
+  <>
+  <tr>
+    <td>
+      <img src={e.imgdata}alt="" style={{width:"5rem",height:"5rem"}}/>
+    </td>
+    <td>
+      <p>{e.rname}</p>
+      <p>Price:₨ {e.price}</p>
+      <p>Quantity: {e.qnty}</p>
+        <p>
+          <i className="fas fa-trash smalltrash"style={{color:"red",fontSize:20,cursor:"pointer"}}></i>
+        </p>
 
-            <p>Your cart is empty</p>
-            <img src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-trolley-shopping-cart-icon-png-free-map-image_1187820.jpg" alt="" className = "emptycart_img"style={{width:"5rem",padding:10}} />
-        </div>
-             
+    </td>
+    <td>
+    <p>
+          <i className="fas fa-trash largetrash"style={{color:"red",fontSize:20,cursor:"pointer"}}></i>
+        </p>
+    </td>
+  </tr>
+  </>
+)
+                  })
+                }
+              <p className='text-center'>Total:₨ 300</p>
+              </tbody>
+            </Table>
+          </div>:
+           <div className="card_details d-flex justify-content-center allign-items-center"style={{width:"23rem",padding:10,position:"relativex"}}>
+           <i className="fas fa-close smallclose" onClick={handleClose} style={{position:"absolute",top:2,right:20,fontSize:23,cursor:"pointer"}}></i>
+   
+               <p>Your cart is empty</p>
+               <img src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-trolley-shopping-cart-icon-png-free-map-image_1187820.jpg" alt="" className = "emptycart_img"style={{width:"5rem",padding:10}} />
+           </div>
+                
+        }
+       
       </Menu>
     
-  </Navbar>
+  </Navbar> 
+  </>
   )
 }
 
