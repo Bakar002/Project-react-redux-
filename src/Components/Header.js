@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <Navbar bg="dark" variant="dark"style={{height:55}}>
     <Container>
-      <NavLink to="#home" className="text-decoration-none text-light mx-3">Add to Cart</NavLink>
+      <NavLink to="/cart" className="text-decoration-none text-light mx-3">Add to Cart</NavLink>
       <Nav className="me-auto">
         <NavLink to="/" className="text-decoration-none text-light">Home</NavLink>
       
