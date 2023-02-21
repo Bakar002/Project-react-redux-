@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Menu from '@mui/material/Menu';
 import {useSelector} from "react-redux"
 import Table from 'react-bootstrap/esm/Table';
-import {NavLink }from 'react-router-dom';
+import { NavLink }from 'react-router-dom';
 
 const Header = () => {
 
@@ -68,7 +68,7 @@ return(
   <>
   <tr>
     <td>
-      <img src={e.imgdata}alt="" style={{width:"5rem",height:"5rem"}}/>
+     <NavLink to={`/cart/${e.id}`}   onClick={handleClose}> <img src={e.imgdata}alt="" style={{width:"5rem",height:"5rem"}}/></NavLink>
     </td>
     <td>
       <p>{e.rname}</p>
