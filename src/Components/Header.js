@@ -7,8 +7,16 @@ import Menu from '@mui/material/Menu';
 import {useSelector} from "react-redux"
 import Table from 'react-bootstrap/esm/Table';
 import { NavLink }from 'react-router-dom';
+import { DLT } from '../Redux/Actions/action';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+ 
 
-const Header = () => {
+const Header = () => { 
+  const dispatch=useDispatch();
+  const[price,setPrice]=useState(0);
+  console.log(price)
+
 
   const getData = useSelector((state)=>
     state.reducer.carts
@@ -22,6 +30,21 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const dlt=(id)=>{
+    dispatch(DLT(id))
+  }
+  const total=()=>{
+    let price=0;
+    getData.map((ele,k)=>{
+      price=ele.price+price
+    })
+    setPrice(price);
+  
+  }
+  useEffect(() => {
+    total();
+    
+  }, [total])
 
   return (<>
     <Navbar bg="dark" variant="dark"style={{height:55}}>
@@ -74,13 +97,13 @@ return(
       <p>{e.rname}</p>
       <p>Price:₨ {e.price}</p>
       <p>Quantity: {e.qnty}</p>
-        <p>
+        <p onClick={()=>dlt(e.id)}>
           <i className="fas fa-trash smalltrash"style={{color:"red",fontSize:20,cursor:"pointer"}}></i>
         </p>
 
     </td>
     <td>
-    <p>
+    <p onClick={()=>dlt(e.id)}>
           <i className="fas fa-trash largetrash"style={{color:"red",fontSize:20,cursor:"pointer"}}></i>
         </p>
     </td>
@@ -89,7 +112,7 @@ return(
 )
                   })
                 }
-              <p className='text-center'>Total:₨ 300</p>
+              <p className='text-center'>Total:₨ {price}</p>
               </tbody>
             </Table>
           </div>:

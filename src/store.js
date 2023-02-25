@@ -3,4 +3,4 @@ import rootred from "./Redux/Reducers/main";
 const store=createStore(
     rootred
 );
-export default store;
+export default store; 
